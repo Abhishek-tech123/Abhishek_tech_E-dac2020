@@ -1,0 +1,16 @@
+use library;
+create table Member (
+Member_ID tinyint(5) not null unique, 
+Member_Name varchar(30) not null, 
+Member_Address varchar(50), 
+Acc_open_date date, 
+Membership_type varchar(20), 
+Penalty_amount int(7));
+describe Member;
+alter table member drop column penalty_amount;
+INSERT INTO Member VALUES (2, "Garima sen", "Pune", current_date() , "Annual");
+insert into Member values (3, "kunal shah", "Mumbai", str_to_date('22-Sept-09','%d-%M-%Y'), "Annual");
+insert into Member values (4, "kunal shah", "Mumbai", str_to_date('20-jan-15','%d-%M-%Y'), "lifetime");
+insert into Member values (5, "Amit Singh", "Pune", current_date(), "lifetime");
+select * from Member;
+show tables;

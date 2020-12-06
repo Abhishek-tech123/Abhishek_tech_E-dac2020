@@ -1,0 +1,23 @@
+use Library
+create table Issue(
+Lab_Issue_Id int(10),
+Book_No int(6),
+Member_Id int(5),
+Issue_date date,
+Return_date date);
+desc Issue;
+drop table Issue;
+desc Issue;
+create table Issue(
+Lab_Issue_Id int(10),
+Book_No int(6),
+Member_Id int(5),
+Issue_date date,
+Return_date date);
+desc Issue;
+insert into Issue (Lab_Issue_Id, Book_No, Member_Id, Issue_date) values (7001,101,2,str_to_date('25-Dec-06','%d-%M-%Y'));
+insert into Issue (Lab_Issue_Id, Book_No, Member_Id, Issue_date) values (7002,102,1,str_to_date('15-jul-06','%d-%M-%Y'));
+insert into Issue (Lab_Issue_Id, Book_No, Member_Id, Issue_date) values (7003,101,1,str_to_date('04-Jul-06','%d-%M-%Y'));
+insert into Issue (Lab_Issue_Id, Book_No, Member_Id, Issue_date) values (7004,101,2,str_to_date('15-Nov-06','%d-%M-%Y'));
+insert into Issue (Lab_Issue_Id, Book_No, Member_Id, Issue_date) values (7005,101,3,str_to_date('18-Feb-06','%d-%M-%Y'));
+select * from Issue;
