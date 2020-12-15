@@ -1,0 +1,92 @@
+CREATE DATABASE ASSIGNMENT4;
+USE ASSIGNMENT4;
+CREATE TABLE DEPARTMENT(
+DEPT_ID INT NOT NULL PRIMARY KEY,
+DEPT_NAME VARCHAR(50));
+
+CREATE TABLE EMPLOYEE(
+EMP_ID INT NOT NULL PRIMARY KEY,
+EMP_NAME VARCHAR(50),
+DEPT_ID INT,
+SALARY INT,
+MANAGER INT,
+FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT(DEPT_ID)
+);
+
+INSERT INTO DEPARTMENT VALUES (1,'FINANCE');
+INSERT INTO DEPARTMENT VALUES(2,'TRAINING');
+INSERT INTO DEPARTMENT VALUES(3,'MARKETING');
+truncate table employee;
+INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,DEPT_ID,SALARY,MANAGER) VALUES (1,'ARUN',1,8000,4);
+INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,DEPT_ID,SALARY,MANAGER) VALUES (2,'KIRAN',1,7000,1);
+INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,DEPT_ID,SALARY,MANAGER) VALUES (3,'SCOTT',1,3000,1);
+INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,DEPT_ID,SALARY) VALUES (4,'MAX',2,9000);
+INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,DEPT_ID,SALARY,MANAGER) VALUES (5,'JACK',2,8000,4);
+INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,SALARY,MANAGER) VALUES (6,'KING',6000,1);
+--                                 ************joins*****************
+
+-- 1. select dept_name and emp_name where dept_id is same.
+select department.dept_name, employee.emp_name from department inner join employee on department.dept_id=employee.dept_id;
+
+-- 2. select all from both tables where dept_id is same.
+
+select * from department inner join employee on department.dept_id=employee.dept_id;
+
+-- 3. select dept_id and sum of salary group it by dept_id.
+
+select department.dept_id, sum(employee.salary) from department, employee where department.dept_id=employee.dept_id group by department.dept_id,employee.dept_id;
+
+-- 4. select dept_name and emp_name apply right outer join and left outer join.
+
+select department.dept_name, employee.emp_name from department right outer join employee on department.dept_id=employee.dept_id;
+
+select department.dept_name, employee.emp_name from department left outer join employee on department.dept_id=employee.dept_id;
+
+-- 5. select emp_name with their respective manager names.
+
+select emp_name , manager from employee where emp_name <> manager;
+
+-- 6. select epm_name with their respective department names.
+
+select emp_name, department.dept_name from employee, department where employee.dept_id=department.dept_id;
+
+
+--                                 *************union****************
+
+-- 1.	select same data from both table.
+
+create table emp1(
+emp_no int primary key,
+emp_name varchar(10));
+
+create table emp2(
+emp_no int primary key,
+emp_name varchar(10));
+
+insert into emp1 values(1,'a');
+insert into emp1 values(2,'b');
+insert into emp1 values(3,'c');
+
+insert into emp2 values(1,'a');
+insert into emp2 values(2,'b');
+insert into emp2 values(4,'d');
+insert into emp2 values(5,'e');
+
+select * from emp1 union select * from emp2;
+
+-- 1. select employee having  same salary as 'Arun'.
+
+select emp_name from employee where salary= any(select salary from employee where emp_name = 'Arun');
+
+-- 2. select employee belonging to same dept as 'jack'.
+
+select emp_name from employee where dept_id = all(select dept_id from employee where emp_name='jack');
+
+-- 3. select name of employee havin lowest salary.
+
+select emp_name from employee where salary = all(select min(salary) from employee);
+
+ -- 4. update salary =15000 of employees belonging to same dept as 'Max'.
+
+update employee set salary=15000 where dept_id = all(select dept_id from (select dept_id from employee where emp_name='Max')a)and emp_name!='Max';
+select * from employee;
